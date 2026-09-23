@@ -1,0 +1,53 @@
+ZX909 / Topin 0x11 backfill example
+=====================================
+
+Source
+------
+Real Traccar traffic from a tested Verdant Trace VT02 / Topin ZX909.
+Captured 2026-09-11.
+
+This excerpt is sanitized for publication. Device identifiers, public IP
+addresses and location-sensitive payload bytes have been removed.
+Message timing, protocol type and the relevant device timestamps are
+preserved from the real capture.
+
+Relevant sequence
+-----------------
+17:04:29  TCP connection established
+
+17:04:29  tracker -> server
+          login frame
+          [device identifier redacted]
+
+17:04:32  tracker -> server
+          Five complete 0x11 frames arrived in one TCP read.
+
+          Embedded device timestamps:
+          17:03:22
+          17:03:23
+          17:03:27
+          17:03:29
+          17:03:59
+
+          [location-sensitive payload bytes redacted]
+
+Why this is useful
+------------------
+The five 0x11 frames were received together by the server at 17:04:32,
+while the timestamps carried by the frames describe fixes from
+17:03:22 through 17:03:59.
+
+The oldest fix in this burst therefore predates server reception by
+about 70 seconds.
+
+The same capture also demonstrates that several complete Topin frames
+can be coalesced into a single TCP read.
+
+Evidence status
+---------------
+Observed.
+
+This real-device capture supports the association between 0x11 traffic
+and delayed/backfilled GPS delivery. It does not by itself establish a
+complete manufacturer-defined meaning or byte-level specification for
+message type 0x11.
