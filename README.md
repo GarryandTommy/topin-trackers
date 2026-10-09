@@ -40,6 +40,20 @@ Current primary test devices:
 -   platform/protocol association: **Topin ZX909**
 -   observed firmware: `ZX909_EU_V1.3.7_2025-11-17_09-43-24`
 
+### Manufacturer information and upcoming hardware
+
+Direct contact with Topin has provided manufacturer documentation for the
+365GPS/Topin tracker-to-server communication protocol. This material is
+used as a reference alongside independently captured traffic and device
+tests; manufacturer descriptions are not automatically classified as
+confirmed behaviour on our tested ZX909 firmware. The manufacturer
+document itself is not redistributed in this repository.
+
+One G63, one G67 and a bare ZX910 PCBA have been ordered and shipped for
+future investigation. According to Topin, the supplied G63 and G67 use
+the ZX910 platform. They have **not yet been tested by this project**;
+no ZX909-to-ZX910 compatibility is claimed.
+
 The title "ZX909 Family" describes the current scope of this research.
 It is **not** intended as an official Topin product-family
 classification. Other Topin models will only be listed as compatible
@@ -147,10 +161,23 @@ A previous CRLF delimiter approach for splitting multiple Topin messages
 was rejected as an unsafe general solution for a binary protocol. A
 future framing solution should be protocol-aware.
 
-Upstream Traccar requested current manufacturer protocol documentation
-before accepting the protocol changes. Obtaining authoritative
-documentation for the newer ZX909 LTE protocol therefore remains an
-important project goal.
+The research has led to concrete upstream Traccar contributions:
+
+- [Traccar PR #6012 — Fix LTE cell decoding for Topin protocol](https://github.com/traccar/traccar/pull/6012)
+- [Traccar PR #6013 — Add frame decoding for Topin protocol](https://github.com/traccar/traccar/pull/6013)
+
+These are upstream contributions, not a claim that the changes have been
+merged. Manufacturer protocol documentation has since been received
+from Topin and can inform further review and validation.
+
+## Why this matters
+
+Topin GPS/LTE trackers are commonly operated through the manufacturer's
+365GPS ecosystem. This project investigates interoperability with
+independently operated infrastructure and publishes reproducible findings
+from real devices. Where appropriate, the work is contributed upstream
+to Traccar so others can benefit without assuming that untested models
+or firmware versions are compatible.
 
 ## Interoperability research
 
@@ -183,7 +210,7 @@ Among the remaining research topics are:
 -   semantics of observed `FF1A` / `001A` responses
 -   additional server-control commands over an existing Topin TCP
     session
--   hardware documentation, PCBA access and debug/test points
+-   ZX910 PCBA access, debug/test points and firmware tooling
 -   validation of additional Topin tracker models
 
 ## About GarryAndTommy
